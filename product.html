@@ -3,17 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details - MyStore</title>
+  <title>Product Details - ASP Store</title>
   <link rel="stylesheet" href="styles.css">
   <script src="store.js" defer></script>
 </head>
 <body>
   <header class="main-header">
     <div class="header-top">
-      <a href="index.html" class="logo">MyStore</a>
+      <a href="index.html" class="logo">
+        <svg class="logo-icon" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#febd69" stroke-width="8" />
+          <path d="M 30 70 L 50 25 L 70 70 M 38 52 L 62 52" fill="none" stroke="#ffd814" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="logo-text">
+          <span class="brand-acronym">ASP</span>
+          <span class="brand-full">Ankit Siddhartha Pudasaini Store</span>
+        </div>
+      </a>
       <div class="search-bar">
-        <input type="text" placeholder="Search products...">
-        <button>Search</button>
+        <input type="text" id="search-input" placeholder="Search products...">
+        <button id="search-btn">Search</button>
       </div>
       <nav class="nav-links">
         <a href="account.html" id="nav-account">Account & Login</a>
@@ -24,8 +33,6 @@
     </div>
     <div class="header-sub">
       <a href="index.html">All Products</a>
-      <a href="#">Today's Deals</a>
-      <a href="#">Electronics</a>
       <a href="contact.html">Customer Service</a>
     </div>
   </header>
@@ -36,7 +43,7 @@
   </main>
 
   <footer class="footer">
-    <p>&copy; 2026 MyStore Inc. All rights reserved.</p>
+    <p>&copy; 2026 ASP (Ankit Siddhartha Pudasaini) Store Inc. All rights reserved.</p>
   </footer>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "name": "asp-backend",
+  "version": "1.0.0",
+  "description": "Backend API for storing user person details",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+winget install --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

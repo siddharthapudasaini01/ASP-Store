@@ -1,6 +1,19 @@
-// store.js
+// Analytics Engine Module
+const ASPAnalytics = {
+  logEvent(eventName, eventData = {}) {
+    const analyticsLogs = JSON.parse(localStorage.getItem('asp_analytics_logs')) || [];
+    const payload = {
+      event: eventName,
+      timestamp: new Date().toISOString(),
+      data: eventData
+    };
+    analyticsLogs.push(payload);
+    localStorage.setItem('asp_analytics_logs', JSON.stringify(analyticsLogs));
+    console.log('[ASP Analytics]', payload);
+  }
+};
 
-// 1. DATA ENGINE: Dynamic Generation of 1,000+ Products
+// 1. DATA ENGINE: Dynamic Generation of Products
 const categories = ['Electronics', 'Home & Kitchen', 'Fashion', 'Fitness', 'Accessories'];
 const totalProductCount = 1050;
 
@@ -9,16 +22,16 @@ const products = Array.from({ length: totalProductCount }, (_, i) => {
   const category = categories[i % categories.length];
   return {
     id: id,
-    name: `${category} Premium Item #${id}`,
+    name: `ASP ${category} Edition #${id}`,
     price: parseFloat((10 + (i * 3.7) % 300).toFixed(2)),
     image: `https://picsum.photos/seed/${id}/300/300`,
     category: category,
-    description: `High-quality ${category.toLowerCase()} item #${id} designed for maximum utility, durability, and modern aesthetics.`,
+    description: `High-quality ${category.toLowerCase()} product curated exclusively for ASP Store. Crafted for durability and premium experience.`,
     qualities: [
-      'Durable, high-grade materials',
+      'Authentic ASP Quality Assured',
       '1-Year Comprehensive Warranty',
       'Eco-friendly packaging',
-      'Free Express Shipping Eligible'
+      'Free Express Shipping'
     ]
   };
 });
@@ -31,11 +44,11 @@ const itemsPerPage = 24;
 
 // 2. STATE MANAGEMENT & LOCAL STORAGE
 function getCart() {
-  return JSON.parse(localStorage.getItem('mystore_cart')) || [];
+  return JSON.parse(localStorage.getItem('asp_cart')) || [];
 }
 
 function saveCart(cart) {
-  localStorage.setItem('mystore_cart', JSON.stringify(cart));
+  localStorage.setItem('asp_cart', JSON.stringify(cart));
   updateCartBadge();
 }
 
@@ -55,13 +68,15 @@ function addToCart(productId) {
     cart.push({ id: productId, quantity: 1 });
   }
   saveCart(cart);
-  alert('Item added to cart!');
+  ASPAnalytics.logEvent('ADD_TO_CART', { productId });
+  alert('Item added to ASP Cart!');
 }
 
 function removeFromCart(productId) {
   let cart = getCart();
   cart = cart.filter(item => item.id !== productId);
   saveCart(cart);
+  ASPAnalytics.logEvent('REMOVE_FROM_CART', { productId });
   renderCartPage();
 }
 
@@ -81,7 +96,7 @@ function updateQuantity(productId, change) {
 
 // 3. AUTHENTICATION MANAGEMENT
 function checkAuthState() {
-  const user = JSON.parse(localStorage.getItem('mystore_user'));
+  const user = JSON.parse(localStorage.getItem('asp_user'));
   const navAccount = document.getElementById('nav-account');
   const loginSection = document.getElementById('login-section');
   const profileSection = document.getElementById('profile-section');
@@ -101,7 +116,7 @@ function checkAuthState() {
   }
 }
 
-// 4. FILTERING & PAGINATION ENGINE
+// 4. FILTERING & PAGINATION
 function getFilteredProducts() {
   return products.filter(product => {
     const matchesCategory = (currentCategory === 'All') || (product.category === currentCategory);
@@ -129,7 +144,7 @@ function renderCatalog() {
   }
 
   if (pageProducts.length === 0) {
-    grid.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
+    grid.innerHTML = '<p class="no-products">No products found matching your search criteria.</p>';
     renderPagination(0);
     return;
   }
@@ -191,6 +206,7 @@ function handleSearch() {
   if (input) {
     searchQuery = input.value.trim();
     currentPage = 1;
+    ASPAnalytics.logEvent('SEARCH', { query: searchQuery });
     renderCatalog();
   }
 }
@@ -209,6 +225,8 @@ function renderProductDetail() {
     return;
   }
 
+  ASPAnalytics.logEvent('VIEW_PRODUCT', { productId });
+
   container.innerHTML = `
     <div>
       <img src="${product.image}" alt="${product.name}">
@@ -220,7 +238,7 @@ function renderProductDetail() {
       <p>${product.description}</p>
 
       <div class="qualities-box">
-        <h3>Key Features & Qualities</h3>
+        <h3>ASP Quality Standards</h3>
         <ul>
           ${product.qualities.map(q => `<li>${q}</li>`).join('')}
         </ul>
@@ -238,8 +256,8 @@ function renderCartPage() {
   const cart = getCart();
   if (cart.length === 0) {
     container.innerHTML = '<p>Your cart is empty.</p>';
-    document.getElementById('cart-subtotal').textContent = '$0.00';
-    document.getElementById('cart-total').textContent = '$0.00';
+    if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = '$0.00';
+    if (document.getElementById('cart-total')) document.getElementById('cart-total').textContent = '$0.00';
     return;
   }
 
@@ -271,11 +289,10 @@ function renderCartPage() {
     `;
   }).join('');
 
-  document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-  document.getElementById('cart-total').textContent = `$${subtotal.toFixed(2)}`;
+  if (document.getElementById('cart-subtotal')) document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+  if (document.getElementById('cart-total')) document.getElementById('cart-total').textContent = `$${subtotal.toFixed(2)}`;
 }
 
-// Dynamic Checkout Renderer (Displays Products on Checkout Page)
 function renderCheckoutPage() {
   const summaryContainer = document.getElementById('checkout-summary-items');
   if (!summaryContainer) return;
@@ -283,8 +300,8 @@ function renderCheckoutPage() {
   const cart = getCart();
   if (cart.length === 0) {
     summaryContainer.innerHTML = '<p>Your cart is empty.</p>';
-    document.getElementById('checkout-subtotal').textContent = '$0.00';
-    document.getElementById('checkout-total').textContent = '$0.00';
+    if (document.getElementById('checkout-subtotal')) document.getElementById('checkout-subtotal').textContent = '$0.00';
+    if (document.getElementById('checkout-total')) document.getElementById('checkout-total').textContent = '$0.00';
     return;
   }
 
@@ -308,15 +325,16 @@ function renderCheckoutPage() {
     `;
   }).join('');
 
-  document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-  document.getElementById('checkout-total').textContent = `$${subtotal.toFixed(2)}`;
+  if (document.getElementById('checkout-subtotal')) document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+  if (document.getElementById('checkout-total')) document.getElementById('checkout-total').textContent = `$${subtotal.toFixed(2)}`;
 
   const checkoutForm = document.getElementById('checkout-form');
   if (checkoutForm) {
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('Order successfully placed! Thank you for your purchase.');
-      localStorage.removeItem('mystore_cart');
+      ASPAnalytics.logEvent('PURCHASE_COMPLETED', { totalAmount: subtotal });
+      alert('Order successfully placed! Thank you for purchasing at ASP Store.');
+      localStorage.removeItem('asp_cart');
       window.location.href = 'orders.html';
     });
   }
@@ -324,6 +342,7 @@ function renderCheckoutPage() {
 
 // 6. INITIALIZATION & EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', () => {
+  ASPAnalytics.logEvent('PAGE_VIEW', { path: window.location.pathname });
   updateCartBadge();
   checkAuthState();
   renderCatalog();
@@ -337,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchBtn) searchBtn.addEventListener('click', handleSearch);
   if (searchInput) {
     searchInput.addEventListener('keyup', (e) => {
-      handleSearch();
+      if (e.key === 'Enter') handleSearch();
     });
   }
 
@@ -350,16 +369,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
       currentCategory = link.getAttribute('data-category');
       currentPage = 1;
+      ASPAnalytics.logEvent('SELECT_CATEGORY', { category: currentCategory });
       renderCatalog();
     });
   });
+
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        name: `${document.getElementById('first-name').value.trim()} ${document.getElementById('last-name').value.trim()}`.trim(),
+        place: document.getElementById('person-place').value.trim(),
+        email: document.getElementById('contact-email').value.trim(),
+        phone: document.getElementById('contact-phone').value.trim(),
+        details: document.getElementById('message').value.trim(),
+        inquiryType: document.getElementById('inquiry-type').value,
+        rating: document.querySelector('input[name="rating"]:checked')?.value || '5'
+      };
+
+      try {
+        const response = await fetch('http://localhost:3000/api/people', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || 'Unable to save details.');
+        }
+
+        ASPAnalytics.logEvent('SUBMIT_CONTACT', { email: payload.email, inquiry: payload.inquiryType, name: payload.name });
+        alert('Feedback and personal details submitted successfully!');
+        contactForm.reset();
+      } catch (error) {
+        ASPAnalytics.logEvent('CONTACT_SUBMIT_ERROR', { message: error.message });
+        alert(error.message || 'Something went wrong while submitting your details.');
+      }
+    });
+  }
 
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('login-email').value;
-      localStorage.setItem('mystore_user', JSON.stringify({ email: email }));
+      localStorage.setItem('asp_user', JSON.stringify({ email: email }));
+      ASPAnalytics.logEvent('LOGIN', { email });
       checkAuthState();
     });
   }
@@ -367,7 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logout-btn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('mystore_user');
+      ASPAnalytics.logEvent('LOGOUT');
+      localStorage.removeItem('asp_user');
       checkAuthState();
     });
   }
