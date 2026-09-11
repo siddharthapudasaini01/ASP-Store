@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyStore - Online Shopping Catalog</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="store.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-top">
+      <a href="index.html" class="logo"></a>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search 1,000+ products...">
+        <button id="search-btn">Search</button>
+      </div>
+      <nav class="nav-links">
+        <a href="account.html" id="nav-account">Account & Login</a>
+        <a href="orders.html">Orders</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="cart.html" class="cart-link">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      </nav>
+    </div>
+    <div class="header-sub">
+      <a href="#" class="category-link active" data-category="All">All Products</a>
+      <a href="#" class="category-link" data-category="Electronics">Electronics</a>
+      <a href="#" class="category-link" data-category="Home & Kitchen">Home & Kitchen</a>
+      <a href="#" class="category-link" data-category="Fashion">Fashion</a>
+      <a href="#" class="category-link" data-category="Fitness">Fitness</a>
+      <a href="#" class="category-link" data-category="Accessories">Accessories</a>
+      <a href="contact.html">Customer Service</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="catalog-header">
+      <h1 class="page-title" id="catalog-title">Explore Our Catalog (1,000+ Items)</h1>
+      <p id="results-count" class="results-count"></p>
+    </div>
+
+    <div id="product-grid" class="product-grid"></div>
+
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MyStore Inc. All rights reserved.</p>
+  </footer>
+</body>
+</html>

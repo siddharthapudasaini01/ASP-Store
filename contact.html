@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us & Feedback - MyStore</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="store.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-top">
+      <a href="index.html" class="logo">MyStore</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products...">
+        <button>Search</button>
+      </div>
+      <nav class="nav-links">
+        <a href="account.html" id="nav-account">Account & Login</a>
+        <a href="orders.html">Orders</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="cart.html" class="cart-link">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      </nav>
+    </div>
+    <div class="header-sub">
+      <a href="index.html">All Products</a>
+      <a href="#">Today's Deals</a>
+      <a href="#">Electronics</a>
+      <a href="contact.html">Customer Service</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Customer Contact & Feedback</h1>
+    <div class="contact-layout">
+      <div class="contact-info-card">
+        <h2>Get in Touch</h2>
+        <p>We are here to help with any questions regarding products, orders, or feedback.</p>
+        <div class="info-group">
+          <strong>Customer Support:</strong>
+          <p>support@mystore.com</p>
+        </div>
+        <div class="info-group">
+          <strong>Helpline:</strong>
+          <p>+1 (800) 555-0199</p>
+        </div>
+        <div class="info-group">
+          <strong>Headquarters:</strong>
+          <p>100 Commerce Way, Suite 400<br>Tech City, TC 90210</p>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h2>Send Us a Message</h2>
+        <form id="contact-form" onsubmit="event.preventDefault(); alert('Feedback submitted! Thank you.');">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name" required>
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email Address</label>
+            <input type="email" id="contact-email" required>
+          </div>
+          <div class="form-group">
+            <label for="inquiry-type">Inquiry Type</label>
+            <select id="inquiry-type">
+              <option>General Support</option>
+              <option>Order Status</option>
+              <option>Product Feedback</option>
+              <option>Returns & Refunds</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="rating-options">
+              <label><input type="radio" name="rating" value="5" checked> ⭐⭐⭐⭐⭐</label>
+              <label><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐</label>
+              <label><input type="radio" name="rating" value="3"> ⭐⭐⭐</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Submit Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MyStore Inc. All rights reserved.</p>
+  </footer>
+</body>
+</html>

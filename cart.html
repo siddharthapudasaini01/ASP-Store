@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - MyStore</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="store.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-top">
+      <a href="index.html" class="logo">MyStore</a>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search products...">
+        <button id="search-btn">Search</button>
+      </div>
+      <nav class="nav-links">
+        <a href="account.html" id="nav-account">Account & Login</a>
+        <a href="orders.html">Orders</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="cart.html" class="cart-link">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      </nav>
+    </div>
+    <div class="header-sub">
+      <a href="index.html">All Products</a>
+      <a href="#">Today's Deals</a>
+      <a href="#">Electronics</a>
+      <a href="contact.html">Customer Service</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Your Shopping Cart</h1>
+    <div class="cart-layout">
+      <div id="cart-items" class="cart-items-list"></div>
+      <div class="order-summary-card">
+        <h2>Order Summary</h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Estimated Shipping</span>
+          <span>FREE</span>
+        </div>
+        <hr class="divider">
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="cart-total">$0.00</span>
+        </div>
+        <a href="checkout.html" class="btn btn-primary btn-block">Proceed to Checkout</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MyStore Inc. All rights reserved.</p>
+  </footer>
+</body>
+</html>

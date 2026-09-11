@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Orders - MyStore</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="store.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-top">
+      <a href="index.html" class="logo">MyStore</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search products...">
+        <button>Search</button>
+      </div>
+      <nav class="nav-links">
+        <a href="account.html" id="nav-account">Account & Login</a>
+        <a href="orders.html">Orders</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="cart.html" class="cart-link">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      </nav>
+    </div>
+    <div class="header-sub">
+      <a href="index.html">All Products</a>
+      <a href="#">Today's Deals</a>
+      <a href="#">Electronics</a>
+      <a href="contact.html">Customer Service</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Order History</h1>
+    
+    <div class="order-card">
+      <div class="order-header">
+        <div>
+          <span class="label">ORDER PLACED:</span> July 14, 2026
+        </div>
+        <div>
+          <span class="label">TOTAL:</span> $129.98
+        </div>
+        <div>
+          <span class="label">ORDER #</span> ORD-1092
+        </div>
+        <div>
+          <span class="badge badge-success">Delivered</span>
+        </div>
+      </div>
+      <div class="order-body">
+        <div class="order-item">
+          <img src="https://picsum.photos/seed/1/80" alt="Product thumbnail">
+          <div>
+            <h3>Premium Wireless Headphones</h3>
+            <p>Qty: 1 | Price: $99.99</p>
+          </div>
+        </div>
+        <div class="order-item">
+          <img src="https://picsum.photos/seed/3/80" alt="Product thumbnail">
+          <div>
+            <h3>Ergonomic Desk Chair</h3>
+            <p>Qty: 1 | Price: $29.99</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-header">
+        <div>
+          <span class="label">ORDER PLACED:</span> August 02, 2026
+        </div>
+        <div>
+          <span class="label">TOTAL:</span> $49.99
+        </div>
+        <div>
+          <span class="label">ORDER #</span> ORD-2041
+        </div>
+        <div>
+          <span class="badge badge-warning">Processing</span>
+        </div>
+      </div>
+      <div class="order-body">
+        <div class="order-item">
+          <img src="https://picsum.photos/seed/2/80" alt="Product thumbnail">
+          <div>
+            <h3>Smart Fitness Watch</h3>
+            <p>Qty: 1 | Price: $49.99</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MyStore Inc. All rights reserved.</p>
+  </footer>
+</body>
+</html>
